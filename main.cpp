@@ -25,6 +25,7 @@ int main( int argc, char *argv[] )
     {
         name = file.assingName( argv[1] );
     }
-    std::cout << name << std::endl;
+
+    // std::cout << name << std::endl;
     return 0;
 }
