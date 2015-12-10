@@ -15,7 +15,7 @@ namespace analyzers
     class Lexical
     {
       public:
-        std::string simbol;
+        std::string symbol;
         int type;
         bool error;
 

@@ -19,7 +19,7 @@ analyzers::Lexical::Lexical()
     this->keyword["while"]  = 20;
     this->keyword["return"] = 21;
 
-    this->simbol = "";
+    this->symbol = "";
     this->state  = 0;
     this->type   = 0;
     this->index  = 0;
@@ -29,7 +29,7 @@ analyzers::Lexical::Lexical()
 analyzers::Lexical::~Lexical()
 {
     this->keyword.clear();
-    this->simbol = "";
+    this->symbol = "";
     this->state  = 0;
     this->type   = 0;
     this->index  = 0;
@@ -51,7 +51,7 @@ std::string analyzers::Lexical::getToken( std::string stream )
 {
     this->index  = 0;
     this->state  = 0;
-    this->simbol = "";
+    this->symbol = "";
 
     stream.assign( this->deleteSpaces( stream ) );
     this->index = 0;
@@ -102,7 +102,7 @@ void analyzers::Lexical::keywords( std::string stream )
 void analyzers::Lexical::nextState( std::string stream, int state )
 {
     this->state = state;
-    this->simbol.push_back( stream[this->index] );
+    this->symbol.push_back( stream[this->index] );
     this->index++;
 }
 
@@ -266,7 +266,7 @@ void analyzers::Lexical::getType()
             this->type = 0;
             break;
         case 2:
-            this->type = this->keyword.at( this->simbol );
+            this->type = this->keyword.at( this->symbol );
             break;
         case 3:
             this->type = 1;
@@ -292,19 +292,19 @@ void analyzers::Lexical::getType()
         case 13:
         case 14:
         case 15:
-            if ( this->simbol.compare( "(" ) == 0 )
+            if ( this->symbol.compare( "(" ) == 0 )
             {
                 this->type = 14;
             }
-            else if ( this->simbol.compare( ")" ) == 0 )
+            else if ( this->symbol.compare( ")" ) == 0 )
             {
                 this->type = 15;
             }
-            else if ( this->simbol.compare( "{" ) == 0 )
+            else if ( this->symbol.compare( "{" ) == 0 )
             {
                 this->type = 16;
             }
-            else if ( this->simbol.compare( "}" ) == 0 )
+            else if ( this->symbol.compare( "}" ) == 0 )
             {
                 this->type = 17;
             }
