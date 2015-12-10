@@ -60,6 +60,8 @@ std::string analyzers::Lexical::getToken( std::string stream )
     {
         this->consume( stream );
 
+        this->getType();
+
         if ( this->index < stream.size() )
         {
             stream.assign( stream.substr( this->index ) );
