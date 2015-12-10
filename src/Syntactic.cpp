@@ -1,10 +1,10 @@
 /*
- * File:   Sintactical.cpp
+ * File:   Syntactic.cpp
  * Author: Miguel Ochoa Hernandez
  *
  */
 
-#include "../Include/Sintactical.h"
+#include "../Include/Syntactic.h"
 
-analyzers::Sintactical::Sintactical() {}
-analyzers::Sintactical::~Sintactical() {}
+analyzers::Syntactic::Syntactic() {}
+analyzers::Syntactic::~Syntactic() {}

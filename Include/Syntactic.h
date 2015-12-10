@@ -1,11 +1,11 @@
 /*
- * File:   Sintactical.h
+ * File:   Syntactic.h
  * Author: Miguel Ochoa Hernandez
  *
  */
 
-#ifndef SINTACTICAL_H
-#define SINTACTICAL_H
+#ifndef SYNTACTIC_H
+#define SYNTACTIC_H
 
 #include <iostream>
 #include <stack>
@@ -13,7 +13,7 @@
 
 namespace analyzers
 {
-    class Sintactical
+    class Syntactic
     {
       public:
         bool error;
@@ -21,8 +21,8 @@ namespace analyzers
         // std::stack<GrammarElement> elements_stack;
         // std::map <int, NotTerminal> rules;
 
-        Sintactical();
-        virtual ~Sintactical();
+        Syntactic();
+        virtual ~Syntactic();
 
         void analyze();
         void read();
@@ -33,4 +33,4 @@ namespace analyzers
       private:
     };
 }
-#endif /* SINTACTICAL_H */
+#endif /* SYNTACTIC_H */
