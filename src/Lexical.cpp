@@ -261,54 +261,78 @@ void analyzers::Lexical::getType()
     switch ( this->state )
     {
         case 1:
+            this->type = 0;
             break;
         case 2:
+            this->type = this->keyword.at( this->simbol );
             break;
         case 3:
-            break;
-        case 4:
+            this->type = 1;
             break;
         case 5:
-            break;
-        case 6:
-            break;
-        case 7:
+            this->type = 2;
             break;
         case 8:
+            this->type = 3;
             break;
         case 9:
+            this->type = 12;
             break;
         case 10:
+            this->type = 13;
             break;
         case 11:
+            this->type = 5;
             break;
         case 12:
+            this->type = 6;
             break;
         case 13:
-            break;
         case 14:
-            break;
         case 15:
+            if ( this->simbol.compare( "(" ) == 0 )
+            {
+                this->type = 14;
+            }
+            else if ( this->simbol.compare( ")" ) == 0 )
+            {
+                this->type = 15;
+            }
+            else if ( this->simbol.compare( "{" ) == 0 )
+            {
+                this->type = 16;
+            }
+            else if ( this->simbol.compare( "}" ) == 0 )
+            {
+                this->type = 17;
+            }
+            /* "[" and  "]" not implemented yet */
             break;
         case 16:
+            this->type = 18;
             break;
         case 17:
+            this->type = 10;
             break;
         case 18:
+            this->type = 11;
             break;
         case 19:
-            break;
         case 20:
-            break;
-        case 21:
+            this->type = 7;
             break;
         case 22:
-            break;
-        case 23:
+            this->type = 8;
             break;
         case 24:
+            this->type = 9;
             break;
         case 25:
+            this->type = 23;
+            break;
+        default:
+            this->error = true;
+            this->type  = -1;
             break;
     }
 }
