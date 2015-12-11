@@ -8,11 +8,11 @@
 #define NONTERMINAL_H
 
 #include <iostream>
-#include "StackElement.h"
+#include "GrammarElement.h"
 
 namespace stack
 {
-    class NonTerminal : public StackElement
+    class NonTerminal : public GrammarElement
     {
       public:
         int reductions;

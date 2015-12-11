@@ -8,11 +8,11 @@
 #define STATE_H
 
 #include <iostream>
-#include "StackElement.h"
+#include "GrammarElement.h"
 
 namespace stack
 {
-    class State : public StackElement
+    class State : public GrammarElement
     {
       public:
         State();

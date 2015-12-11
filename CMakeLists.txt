@@ -13,7 +13,7 @@ set (Project_src    src/namespaceFiles/Read.cpp
                     src/namespaceStack/Terminal.cpp
                     src/namespaceStack/NonTerminal.cpp
                     src/namespaceStack/State.cpp
-                    src/namespaceStack/StackElement.cpp
+                    src/namespaceStack/GrammarElement.cpp
 )
 
 include_directories (${Include_dirs})

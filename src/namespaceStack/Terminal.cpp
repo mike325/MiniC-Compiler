@@ -6,8 +6,8 @@
 
 #include "../../Include/namespaceStack/Terminal.h"
 
-stack::Terminal::Terminal() : StackElement() { this->terminal = ""; }
-stack::Terminal::Terminal( std::string terminal ) : StackElement()
+stack::Terminal::Terminal() : GrammarElement() { this->terminal = ""; }
+stack::Terminal::Terminal( std::string terminal ) : GrammarElement()
 {
     this->terminal.assign( terminal );
 }

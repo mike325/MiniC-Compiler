@@ -6,7 +6,7 @@
 
 #include "../../Include/namespaceStack/NonTerminal.h"
 
-stack::NonTerminal::NonTerminal() : StackElement()
+stack::NonTerminal::NonTerminal() : GrammarElement()
 {
     this->state             = 0;
     this->reductions        = 0;
@@ -14,7 +14,7 @@ stack::NonTerminal::NonTerminal() : StackElement()
 }
 
 stack::NonTerminal::NonTerminal( int state, int reductions, std::string nontermial_simbol )
-    : StackElement()
+    : GrammarElement()
 {
     this->state      = state;
     this->reductions = reductions;

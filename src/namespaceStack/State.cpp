@@ -6,8 +6,8 @@
 
 #include "../../Include/namespaceStack/State.h"
 
-stack::State::State() : StackElement() { this->state = 0; }
-stack::State::State( int state ) : StackElement() { this->state = state; }
+stack::State::State() : GrammarElement() { this->state = 0; }
+stack::State::State( int state ) : GrammarElement() { this->state = state; }
 stack::State::~State() { this->state = 0; }
 void stack::State::print()
 {

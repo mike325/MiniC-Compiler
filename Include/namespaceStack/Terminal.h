@@ -8,11 +8,11 @@
 #define TERMINAL_H
 
 #include <iostream>
-#include "StackElement.h"
+#include "GrammarElement.h"
 
 namespace stack
 {
-    class Terminal : public StackElement
+    class Terminal : public GrammarElement
     {
       public:
         std::string terminal;
