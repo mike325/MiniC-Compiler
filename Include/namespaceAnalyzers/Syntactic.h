@@ -20,7 +20,7 @@ namespace analyzers
       public:
         bool error;
         int **matrix;
-        std::stack< stack::GrammarElement > elements_stack;
+        std::stack< stack::GrammarElement > *stack;
         std::map< int, stack::NonTerminal > rules;
 
         Syntactic();
