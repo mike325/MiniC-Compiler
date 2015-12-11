@@ -15,8 +15,13 @@ namespace stack
     class Terminal : public StackElement
     {
       public:
+        std::string terminal;
+
         Terminal();
+        Terminal( std::string temrinal );
         virtual ~Terminal();
+
+        void print();
 
       private:
     };

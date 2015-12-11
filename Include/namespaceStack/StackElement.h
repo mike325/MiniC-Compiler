@@ -14,8 +14,12 @@ namespace stack
     class StackElement
     {
       public:
+        int state;
+
         StackElement();
         virtual ~StackElement();
+
+        virtual void print();
 
       private:
     };

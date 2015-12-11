@@ -16,7 +16,10 @@ namespace stack
     {
       public:
         State();
+        State( int state );
         virtual ~State();
+
+        void print();
 
       private:
     };

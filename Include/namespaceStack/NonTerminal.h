@@ -15,8 +15,14 @@ namespace stack
     class NonTerminal : public StackElement
     {
       public:
+        int reductions;
+        std::string nontermial_simbol;
+
         NonTerminal();
+        NonTerminal( int state, int reductions, std::string nontermial_simbol );
         virtual ~NonTerminal();
+
+        void print();
 
       private:
     };
