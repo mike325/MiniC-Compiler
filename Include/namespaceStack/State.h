@@ -12,7 +12,7 @@
 
 namespace stack
 {
-    class State : StackElement
+    class State : public StackElement
     {
       public:
         State();

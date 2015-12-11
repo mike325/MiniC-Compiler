@@ -12,7 +12,7 @@
 
 namespace stack
 {
-    class Terminal : StackElement
+    class Terminal : public StackElement
     {
       public:
         Terminal();

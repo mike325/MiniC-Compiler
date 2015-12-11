@@ -12,7 +12,7 @@
 
 namespace stack
 {
-    class NonTerminal : StackElement
+    class NonTerminal : public StackElement
     {
       public:
         NonTerminal();
