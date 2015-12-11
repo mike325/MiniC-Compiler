@@ -6,10 +6,14 @@ set (Include_dirs   Include/namespaceFiles
                     Include/namespaceAnalyzers
 )
 set (Project_bin_src main.cpp)
-set (Project_src    src/namespaceAnalyzers/Lexic.cpp
+set (Project_src    src/namespaceFiles/Read.cpp
+                    src/namespaceAnalyzers/Lexic.cpp
                     src/namespaceAnalyzers/Syntactic.cpp
                     src/namespaceAnalyzers/Semantic.cpp
-                    src/namespaceFiles/Read.cpp
+                    src/namespaceStack/Terminal.cpp
+                    src/namespaceStack/NonTerminal.cpp
+                    src/namespaceStack/State.cpp
+                    src/namespaceStack/StackElement.cpp
 )
 
 include_directories (${Include_dirs})
