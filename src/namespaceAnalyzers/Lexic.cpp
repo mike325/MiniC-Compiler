@@ -1,0 +1,344 @@
+/*
+ * File:   Lexic.cpp
+ * Author: Miguel Ochoa Hernandez
+ *
+ */
+
+#include <string.h>
+#include "../../Include/namespaceAnalyzers/Lexic.h"
+
+analyzers::Lexic::Lexic()
+{
+    // pendient
+    this->keyword["int"]    = 4;
+    this->keyword["float"]  = 4;
+    this->keyword["void"]   = 4;
+    this->keyword["string"] = 4;
+    this->keyword["if"]     = 19;
+    this->keyword["else"]   = 22;
+    this->keyword["while"]  = 20;
+    this->keyword["return"] = 21;
+
+    this->symbol = "";
+    this->state  = 0;
+    this->type   = 0;
+    this->index  = 0;
+    this->error  = false;
+}
+
+analyzers::Lexic::~Lexic()
+{
+    this->keyword.clear();
+    this->symbol = "";
+    this->state  = 0;
+    this->type   = 0;
+    this->index  = 0;
+    this->error  = false;
+}
+
+std::string analyzers::Lexic::deleteSpaces( std::string stream )
+{
+    stream.assign( stream.substr( this->index ) );
+    if ( stream[0] == ' ' || stream[0] == '\t' || stream[0] == '\n' || stream[0] == '\r' )
+    {
+        this->index++;
+        stream.assign( this->deleteSpaces( stream ) );
+    }
+    return stream;
+}
+
+std::string analyzers::Lexic::getToken( std::string stream )
+{
+    this->index  = 0;
+    this->state  = 0;
+    this->symbol = "";
+
+    stream.assign( this->deleteSpaces( stream ) );
+    this->index = 0;
+
+    if ( stream != "" && this->index < stream.size() )
+    {
+        this->consume( stream );
+
+        this->getType();
+
+        if ( this->index < stream.size() )
+        {
+            stream.assign( stream.substr( this->index ) );
+        }
+        else
+        {
+            stream = "";
+        }
+    }
+    else
+    {
+        stream = "";
+    }
+
+    return stream;
+}
+
+bool analyzers::Lexic::outLimit( std::string stream )
+{
+    bool out_limit = false;
+
+    if ( this->index + 1 >= stream.size() )
+    {
+        out_limit = true;
+    }
+
+    return out_limit;
+}
+
+void analyzers::Lexic::keywords( std::string stream )
+{
+    if ( this->keyword.find( stream ) != this->keyword.end() )
+    {
+        this->state = 2;
+    }
+}
+
+void analyzers::Lexic::nextState( std::string stream, int state )
+{
+    this->state = state;
+    this->symbol.push_back( stream[this->index] );
+    this->index++;
+}
+
+void analyzers::Lexic::identifier( std::string stream )
+{
+    if ( !this->outLimit( stream ) )
+    {
+        if ( isalpha( stream[this->index] ) || isdigit( stream[this->index] ) ||
+             stream[this->index] == '_' )
+        {
+            this->nextState( stream, 1 );
+            this->identifier( stream );
+        }
+    }
+}
+
+void analyzers::Lexic::real( std::string stream )
+{
+    if ( !this->outLimit( stream ) )
+    {
+        if ( isdigit( stream[this->index] ) )
+        {
+            this->nextState( stream, 5 );
+            this->real( stream );
+        }
+    }
+}
+
+void analyzers::Lexic::integer( std::string stream )
+{
+    if ( !this->outLimit( stream ) )
+    {
+        if ( isdigit( stream[this->index] ) )
+        {
+            this->nextState( stream, 3 );
+            this->integer( stream );
+        }
+        else if ( stream[this->index] == '.' )
+        {
+            this->nextState( stream, 4 );
+            this->real( stream );
+        }
+    }
+}
+
+void analyzers::Lexic::string( std::string stream )
+{
+    if ( !this->outLimit( stream ) )
+    {
+        if ( stream[this->index] != '"' )
+        {
+            this->nextState( stream, 7 );
+            this->string( stream );
+        }
+    }
+}
+
+void analyzers::Lexic::checkNext( std::string stream, char character, int state )
+{
+    if ( !this->outLimit( stream ) )
+    {
+        if ( stream[this->index] == character )
+        {
+            this->nextState( stream, state );
+        }
+    }
+}
+
+void analyzers::Lexic::consume( std::string stream )
+{
+    if ( isalpha( stream[this->index] ) )
+    {
+        this->nextState( stream, 1 );
+        this->identifier( stream );
+
+        this->keywords( stream );
+    }
+    else if ( isdigit( stream[this->index] ) )
+    {
+        this->nextState( stream, 3 );
+        this->integer( stream );
+    }
+    else if ( stream[this->index] == '"' )
+    {
+        this->nextState( stream, 6 );
+        this->string( stream );
+
+        if ( stream[this->index] == '"' )
+        {
+            this->nextState( stream, 8 );
+        }
+    }
+    else if ( stream[this->index] == ';' )
+    {
+        this->nextState( stream, 9 );
+    }
+    else if ( stream[this->index] == ',' )
+    {
+        this->nextState( stream, 10 );
+    }
+    else if ( stream[this->index] == '+' || stream[this->index] == '-' )
+    {
+        this->nextState( stream, 11 );
+    }
+    else if ( stream[this->index] == '*' || stream[this->index] == '/' )
+    {
+        this->nextState( stream, 12 );
+    }
+    else if ( stream[this->index] == '(' || stream[this->index] == ')' )
+    {
+        this->nextState( stream, 13 );
+    }
+    else if ( stream[this->index] == '[' || stream[this->index] == ']' )
+    {
+        this->nextState( stream, 14 );
+    }
+    else if ( stream[this->index] == '{' || stream[this->index] == '}' )
+    {
+        this->nextState( stream, 15 );
+    }
+    else if ( stream[this->index] == '=' )
+    {
+        this->nextState( stream, 16 );
+        this->checkNext( stream, '=', 18 );
+    }
+    else if ( stream[this->index] == '!' )
+    {
+        this->nextState( stream, 17 );
+        this->checkNext( stream, '=', 18 );
+    }
+    else if ( stream[this->index] == '<' || stream[this->index] == '>' )
+    {
+        this->nextState( stream, 19 );
+        this->checkNext( stream, '=', 20 );
+    }
+    else if ( stream[this->index] == '&' )
+    {
+        this->nextState( stream, 21 );
+        this->checkNext( stream, '&', 22 );
+    }
+    else if ( stream[this->index] == '|' )
+    {
+        this->nextState( stream, 23 );
+        this->checkNext( stream, '|', 24 );
+    }
+    else if ( stream[this->index] == '$' )
+    {
+        this->nextState( stream, 25 );
+    }
+    else
+    {
+        this->nextState( stream, 26 );
+    }
+}
+
+void analyzers::Lexic::getType()
+{
+    switch ( this->state )
+    {
+        case 1:
+            this->type = 0;
+            break;
+        case 2:
+            this->type = this->keyword.at( this->symbol );
+            break;
+        case 3:
+            this->type = 1;
+            break;
+        case 5:
+            this->type = 2;
+            break;
+        case 8:
+            this->type = 3;
+            break;
+        case 9:
+            this->type = 12;
+            break;
+        case 10:
+            this->type = 13;
+            break;
+        case 11:
+            this->type = 5;
+            break;
+        case 12:
+            this->type = 6;
+            break;
+        case 13:
+        case 14:
+        case 15:
+            if ( this->symbol.compare( "(" ) == 0 )
+            {
+                this->type = 14;
+            }
+            else if ( this->symbol.compare( ")" ) == 0 )
+            {
+                this->type = 15;
+            }
+            else if ( this->symbol.compare( "{" ) == 0 )
+            {
+                this->type = 16;
+            }
+            else if ( this->symbol.compare( "}" ) == 0 )
+            {
+                this->type = 17;
+            }
+            /* "[" and  "]" not implemented yet */
+            break;
+        case 16:
+            this->type = 18;
+            break;
+        case 17:
+            this->type = 10;
+            break;
+        case 18:
+            this->type = 11;
+            break;
+        case 19:
+        case 20:
+            this->type = 7;
+            break;
+        case 22:
+            this->type = 8;
+            break;
+        case 24:
+            this->type = 9;
+            break;
+        case 25:
+            this->type = 23;
+            break;
+        default:
+            this->error = true;
+            this->type  = -1;
+            break;
+    }
+}
+
+/*
+void print();
+*/
