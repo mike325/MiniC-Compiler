@@ -10,6 +10,8 @@
 #include <iostream>
 #include <stack>
 #include <map>
+#include "../../Include/namespaceStack/NonTerminal.h"
+#include "../../Include/namespaceStack/GrammarElement.h"
 
 namespace analyzers
 {
@@ -18,8 +20,8 @@ namespace analyzers
       public:
         bool error;
         int **matrix;
-        // std::stack<GrammarElement> elements_stack;
-        // std::map <int, NotTerminal> rules;
+        std::stack< stack::GrammarElement > elements_stack;
+        std::map< int, stack::NonTerminal > rules;
 
         Syntactic();
         virtual ~Syntactic();
