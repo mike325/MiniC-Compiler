@@ -6,14 +6,14 @@
 
 #include <iostream>
 #include <string.h>
-#include "Include/Syntactic.h"
-#include "Include/Read.h"
+#include "Include/namespaceAnalyzers/Syntactic.h"
+#include "Include/namespaceFiles/Read.h"
 
 int main( int argc, char *argv[] )
 {
     char *name = NULL;
     analyzers::Syntactic analizer;
-    Read file;
+    files::Read file;
 
     if ( argc <= 1 )
     {
