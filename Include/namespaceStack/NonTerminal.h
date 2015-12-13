@@ -15,11 +15,11 @@ namespace stack
     class NonTerminal : public GrammarElement
     {
       public:
-        int reductions;
+        int reductions, id;
         std::string nontermial_simbol;
 
         NonTerminal();
-        NonTerminal( int state, int reductions, std::string nontermial_simbol );
+        NonTerminal( int id, int reductions, std::string nontermial_simbol );
         virtual ~NonTerminal();
 
         void print();
