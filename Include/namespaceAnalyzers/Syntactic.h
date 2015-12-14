@@ -10,6 +10,9 @@
 #include <iostream>
 #include <stack>
 #include <map>
+#include <memory>
+#include <mutex>
+
 #include "../../Include/namespaceStack/NonTerminal.h"
 #include "../../Include/namespaceStack/GrammarElement.h"
 
@@ -20,8 +23,8 @@ namespace analyzers
       public:
         bool error;
         int **matrix;
-        std::stack< stack::GrammarElement > *stack;
-        std::map< int, stack::NonTerminal > rules;
+        std::stack< std::shared_ptr< stack::GrammarElement > > *stack;
+        std::map< int, std::shared_ptr< stack::NonTerminal > > rules;
 
         Syntactic();
         virtual ~Syntactic();
