@@ -78,8 +78,7 @@ analyzers::Syntactic::Syntactic()
     grammar.close();
 
     this->stack->push( std::shared_ptr< stack::Terminal >( new stack::Terminal( "$" ) ) );
-    this->stack->push( std::shared_ptr< stack::State >(
-        new stack::State( 0 #include "../../Include/namespaceStack/Terminal.h" ) ) );
+    this->stack->push( std::shared_ptr< stack::State >( new stack::State( 0 ) ) );
 }
 
 analyzers::Syntactic::~Syntactic()
