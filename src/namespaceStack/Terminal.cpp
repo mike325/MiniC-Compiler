@@ -6,14 +6,14 @@
 
 #include "../../Include/namespaceStack/Terminal.h"
 
-stack::Terminal::Terminal() : GrammarElement() { this->terminal = ""; }
-stack::Terminal::Terminal( std::string terminal ) : GrammarElement()
+stack::Terminal::Terminal() : GrammarElement() { this->symbol = ""; }
+stack::Terminal::Terminal( std::string symbol ) : GrammarElement()
 {
-    this->terminal.assign( terminal );
+    this->symbol.assign( symbol );
 }
-stack::Terminal::~Terminal() { this->terminal = ""; }
+stack::Terminal::~Terminal() { this->symbol = ""; }
 void stack::Terminal::print()
 {
     std::cout << "Terminal state " << this->state << std::endl;
-    std::cout << "Terminal simbol " << this->terminal << std::endl;
+    std::cout << "Terminal simbol " << this->symbol << std::endl;
 }

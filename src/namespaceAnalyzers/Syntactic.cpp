@@ -1,18 +1,20 @@
 
 #include <fstream>
-#include <cstdlib>
-#include <cstdio>
+#include <algorithm>
+#include "../../Include/namespaceAnalyzers/Lexic.h"
 #include "../../Include/namespaceAnalyzers/Syntactic.h"
-#include "../../Include/namespaceStack/GrammarElement.h"
-#include "../../Include/namespaceStack/NonTerminal.h"
 #include "../../Include/namespaceStack/Terminal.h"
 #include "../../Include/namespaceStack/State.h"
+#include "../../Include/namespaceStack/NonTerminal.h"
+
+typedef std::shared_ptr< stack::State > State_prt;
+typedef std::shared_ptr< stack::Terminal > Terminal_prt;
 
 analyzers::Syntactic::Syntactic()
 {
     this->error = false;
     // this->rules.clear();
-    this->stack = new std::stack< std::shared_ptr< stack::GrammarElement > >();
+    this->stack = new std::stack< Grammar_ptr >();
 
     std::ifstream grammar( "../../Grammar/compiler.lr" );
 
@@ -45,7 +47,7 @@ analyzers::Syntactic::Syntactic()
 
             // stack::NonTerminal new_nonterminal( nonterminal_id, reductions, simbol );
             // this->rules[i] = new_nonterminal;
-            this->rules[i] = std::shared_ptr< stack::NonTerminal >(
+            this->rules[i] = NonTerminal_prt(
                 new stack::NonTerminal( nonterminal_id, reductions, simbol ) );
         }
 
@@ -69,6 +71,7 @@ analyzers::Syntactic::Syntactic()
             // std::istringstream matrix_buffer( buffer );
             for ( unsigned int j = 0; j < colums; ++j )
             {
+                // check buffer characters
                 sscanf( buffer, "%[^\t^\n]s", matrix_buffer );
                 this->matrix[i][j] = atoi( matrix_buffer );
             }
@@ -77,8 +80,8 @@ analyzers::Syntactic::Syntactic()
     }
     grammar.close();
 
-    this->stack->push( std::shared_ptr< stack::Terminal >( new stack::Terminal( "$" ) ) );
-    this->stack->push( std::shared_ptr< stack::State >( new stack::State( 0 ) ) );
+    this->stack->push( Terminal_prt( new stack::Terminal( "$" ) ));
+    this->stack->push( State_prt( new stack::State( 0 ) ) );
 }
 
 analyzers::Syntactic::~Syntactic()
@@ -95,10 +98,115 @@ analyzers::Syntactic::~Syntactic()
     delete[] this->matrix;
 }
 
+std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement)
+{
+    while(stream.find(character) != stream.npos)
+    {
+        int pos = stream.find_first_of(character);
+        std::swap(stream[pos], replacement);
+    }
+    return stream;
+}
+
+void analyzers::Syntactic::analyze(char *file_name)
+{
+    analyzers::Lexic lexic;
+    std::string lines = "", line_tail = "", copy_line_tail = "",stream_name(file_name);
+    std::string buffer = "";
+    int action = 0, finish = 0, head_state = 0;
+    Grammar_ptr stack_head;
+
+    std::ifstream source_code(file_name);
+
+    if(!source_code.good())
+    {
+        std::cout << "Missing file\n\n";
+    }
+    else
+    {
+        while( !source_code.eof() || !std::getline(source_code, buffer) )
+        {
+            lines.append(buffer);
+        }
+
+        this->replace(lines, '\r', '\0');
+        lines += '$';
+
+        //this->print();
+
+        lines = lexic.getToken(lines);
+        copy_line_tail.assign(lines);
+
+        while(!finish)
+        {
+            if(!lexic.error)
+            {
+                head_state = this->stack->top()->state;
+                action = this->matrix[head_state][lexic.type];
+
+                if(action == -1)
+                {
+                    finish = 0;
+                }
+                else if (action > 0)
+                {
+                    // stack::Terminal terminal (lexic.symbol);
+                    this->stack->push( Terminal_prt(new stack::Terminal(lexic.symbol)) );
+                    this->stack->push( State_prt(new stack::State(action)) );
+                }
+                else if(action < 0)
+                {
+
+                }
+                else
+                {
+                    this->error = true;
+                    //print syntactic error
+                }
+            }
+            else
+            {
+                //print lexic error
+            }
+        }
+
+        if(!lexic.error && this->error)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+    source_code.close();
+}
+
+void analyzers::Syntactic::printStack()
+{
+    std::stack<Grammar_ptr> copy (*this->stack);
+
+    std::string tab = "\t";
+    std::cout << "Pila:     ";
+
+    if(copy.size() < 7)
+    {
+        tab.push_back('\t');
+    }
+
+    for(unsigned int i = 0; i < copy.size(); i++)
+    {
+        Grammar_ptr stack_head = copy.top();
+        stack_head->print();
+        copy.pop();
+    }
+}
+
+
 /*
-void analyzers::Syntactic::analyze();
+
 void analyzers::Syntactic::read();
 int analyzers::Syntactic::stackTop();
-void analyzers::Syntactic::printStack();
 void analyzers::Syntactic::print();
 */

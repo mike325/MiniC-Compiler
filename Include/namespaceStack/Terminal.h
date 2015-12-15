@@ -15,10 +15,10 @@ namespace stack
     class Terminal : public GrammarElement
     {
       public:
-        std::string terminal;
+        std::string symbol;
 
         Terminal();
-        Terminal( std::string temrinal );
+        Terminal( std::string symbol );
         virtual ~Terminal();
 
         void print();

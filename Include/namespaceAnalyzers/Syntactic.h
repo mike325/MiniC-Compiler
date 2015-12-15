@@ -16,6 +16,9 @@
 #include "../../Include/namespaceStack/NonTerminal.h"
 #include "../../Include/namespaceStack/GrammarElement.h"
 
+typedef std::shared_ptr< stack::GrammarElement > Grammar_ptr;
+typedef std::shared_ptr< stack::NonTerminal > NonTerminal_prt;
+
 namespace analyzers
 {
     class Syntactic
@@ -23,13 +26,14 @@ namespace analyzers
       public:
         bool error;
         int **matrix;
-        std::stack< std::shared_ptr< stack::GrammarElement > > *stack;
-        std::map< int, std::shared_ptr< stack::NonTerminal > > rules;
+        std::stack< Grammar_ptr > *stack;
+        std::map< int,  NonTerminal_prt > rules;
 
         Syntactic();
         virtual ~Syntactic();
 
-        void analyze();
+        std::string replace( std::string stream, char character, char replacement);
+        void analyze(char *file_name);
         void read();
         int stackTop();
         void printStack();
