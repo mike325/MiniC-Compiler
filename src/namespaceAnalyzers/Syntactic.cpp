@@ -197,9 +197,11 @@ void analyzers::Syntactic::analyze( char *file_name )
         if ( !lexic.error && !this->error )
         {
             // source code correct
+            std::cout << "Correct\n";
         }
         else
         {
+            std::cout << "Incorrect\n";
             // null
         }
     }
