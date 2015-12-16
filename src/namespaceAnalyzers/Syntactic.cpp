@@ -217,7 +217,7 @@ void analyzers::Syntactic::printStack()
         tab.push_back( '\t' );
     }
 
-    for ( unsigned int i = 0; i < copy.size(); i++ )
+    while (copy.size() > 0)
     {
         Grammar_ptr stack_head = copy.top();
         stack_head->print();
