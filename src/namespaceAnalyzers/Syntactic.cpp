@@ -10,7 +10,7 @@ analyzers::Syntactic::Syntactic()
     // this->rules.clear();
     this->stack = new std::stack< Grammar_ptr >();
 
-    std::ifstream grammar( "../../Grammar/compiler.lr" );
+    std::ifstream grammar( "MiniC-Compiler/Grammar/compiler.lr" );
 
     if ( !grammar.good() )
     {
@@ -108,8 +108,8 @@ void analyzers::Syntactic::analyze( char *file_name )
     analyzers::Lexic lexic;
     std::string lines = "", line_tail = "";
     std::string buffer = "";
-    int action = 0;
-    bool finish = false;
+    int action         = 0;
+    bool finish        = false;
 
     std::ifstream source_code( file_name );
 
@@ -136,7 +136,7 @@ void analyzers::Syntactic::analyze( char *file_name )
         {
             if ( !lexic.error )
             {
-                action     = this->matrix[this->stackTop()][lexic.type];
+                action = this->matrix[this->stackTop()][lexic.type];
 
                 if ( action == -1 )
                 {
@@ -229,11 +229,7 @@ void analyzers::Syntactic::printStack()
     }
 }
 
-int analyzers::Syntactic::stackTop()
-{
-    return this->stack->top()->state;
-}
-
+int analyzers::Syntactic::stackTop() { return this->stack->top()->state; }
 void analyzers::Syntactic::print()
 {
     std::cout << " State " << std::endl;
