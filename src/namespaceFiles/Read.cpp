@@ -52,12 +52,12 @@ char *files::Read::assignName( char *name )
         strcpy( new_name, name );
     }
 
-    std::ifstream file(new_name);
+    std::ifstream file( new_name );
 
-    if(!file.good())
+    if ( !file.good() )
     {
-        std::string file_name(new_name);
-        throw new exceptions::FileException(file_name);
+        std::string file_name( new_name );
+        throw exceptions::FileException( file_name );
     }
 
     return new_name;

@@ -14,7 +14,8 @@ int main( int argc, char *argv[] )
     analyzers::Syntactic analyzer;
     files::Read file;
 
-    try {
+    try
+    {
         if ( argc <= 1 )
         {
             // std::cout << file.name << std::endl;
@@ -28,7 +29,7 @@ int main( int argc, char *argv[] )
 
         analyzer.analyze( name );
     }
-    catch (exceptions::FileException &load)
+    catch ( exceptions::FileException &load )
     {
         std::cout << load.what() << std::endl;
     }
