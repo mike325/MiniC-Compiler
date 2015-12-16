@@ -5,10 +5,7 @@
 #include "../../Include/namespaceAnalyzers/Syntactic.h"
 #include "../../Include/namespaceStack/Terminal.h"
 #include "../../Include/namespaceStack/State.h"
-#include "../../Include/namespaceStack/NonTerminal.h"
 
-typedef std::shared_ptr< stack::State > State_prt;
-typedef std::shared_ptr< stack::Terminal > Terminal_prt;
 
 analyzers::Syntactic::Syntactic()
 {
@@ -26,12 +23,13 @@ analyzers::Syntactic::Syntactic()
     {
         std::string simbol = "";
         int nonterminal_id = 0, reductions = 0;
-        unsigned int rule_number = 0, colums = 0, rows = 0;
+        int colums = 0, rows = 0;
+        int rule_number;
         char buffer[500], matrix_buffer[5];
         grammar.getline( buffer, 10, '\n' );
         rule_number = atoi( buffer );
 
-        for ( int i = 0; i < ( int )rule_number; ++i )
+        for (int i = 0; i < rule_number; ++i)
         {
             grammar.getline( buffer, 20, '\t' );
             nonterminal_id = atoi( buffer );
@@ -60,16 +58,16 @@ analyzers::Syntactic::Syntactic()
         // matrix size
         this->matrix = new int *[rows];
 
-        for ( unsigned int i = 0; i < colums; ++i )
+        for (int i = 0; i < colums; ++i)
         {
             this->matrix[i] = new int[colums];
         }
 
-        for ( unsigned int i = 0; i < rows; ++i )
+        for (int i = 0; i < rows; ++i)
         {
             grammar.getline( buffer, 500, '\n' );
             // std::istringstream matrix_buffer( buffer );
-            for ( unsigned int j = 0; j < colums; ++j )
+            for (int j = 0; j < colums; ++j)
             {
                 // check buffer characters
                 sscanf( buffer, "%[^\t^\n]s", matrix_buffer );
@@ -102,7 +100,7 @@ std::string analyzers::Syntactic::replace( std::string stream, char character, c
 {
     while ( stream.find( character ) != stream.npos )
     {
-        int pos = stream.find_first_of( character );
+        unsigned long pos = stream.find_first_of(character);
         std::swap( stream[pos], replacement );
     }
     return stream;
@@ -111,10 +109,10 @@ std::string analyzers::Syntactic::replace( std::string stream, char character, c
 void analyzers::Syntactic::analyze( char *file_name )
 {
     analyzers::Lexic lexic;
-    std::string lines = "", line_tail = "", copy_line_tail = "", stream_name( file_name );
+    std::string lines = "", line_tail = "";
     std::string buffer = "";
-    int action = 0, finish = 0, head_state = 0;
-    Grammar_ptr stack_head;
+    int action = 0, head_state = 0;
+    bool finish = false;
 
     std::ifstream source_code( file_name );
 
@@ -135,7 +133,7 @@ void analyzers::Syntactic::analyze( char *file_name )
         // this->print();
 
         lines = lexic.getToken( lines );
-        copy_line_tail.assign( lines );
+        line_tail.assign(lines);
 
         while ( !finish )
         {
@@ -146,31 +144,59 @@ void analyzers::Syntactic::analyze( char *file_name )
 
                 if ( action == -1 )
                 {
-                    finish = 0;
+                    finish = true;
                 }
                 else if ( action > 0 )
                 {
                     // stack::Terminal terminal (lexic.symbol);
                     this->stack->push( Terminal_prt( new stack::Terminal( lexic.symbol ) ) );
                     this->stack->push( State_prt( new stack::State( action ) ) );
+                    // this->print();
+                    line_tail = lines;
+                    lines = lexic.getToken(lines);
                 }
                 else if ( action < 0 )
                 {
+                    int rule_number = (action * -1) - 2;
+                    if (this->rules.find(rule_number) != this->rules.end()) {
+                        NonTerminal_prt rule(new stack::NonTerminal(this->rules.at(rule_number)));
+
+                        /* just for some tests */
+                        for (unsigned int i = 0; i < rule->reductions * 2; ++i) {
+                            this->stack->pop();
+                        }
+                        /* just for some tests */
+
+                        action = this->matrix[this->stack->top()->state][rule->state];
+
+                        this->stack->push(rule);
+                        this->stack->push(State_prt(new stack::State(action)));
+
+                        // this->print();
+                    }
+                    else {
+                        std::cout << "Rule " << rule_number << "does not exist\n";
+                        this->error = true;
+                        finish = true;
+                    }
                 }
                 else
                 {
                     this->error = true;
+                    finish = true;
                     // print syntactic error
                 }
             }
             else
             {
+                finish = true;
                 // print lexic error
             }
         }
 
-        if ( !lexic.error && this->error )
+        if (!lexic.error && !this->error)
         {
+            // source code correct
         }
         else
         {

@@ -4,15 +4,13 @@
  *
  */
 
-#include <iostream>
-#include <string.h>
 #include "Include/namespaceAnalyzers/Syntactic.h"
 #include "Include/namespaceFiles/Read.h"
 
 int main( int argc, char *argv[] )
 {
     char *name = NULL;
-    analyzers::Syntactic analizer;
+    analyzers::Syntactic analyzer;
     files::Read file;
 
     if ( argc <= 1 )
@@ -26,6 +24,7 @@ int main( int argc, char *argv[] )
         name = file.assingName( argv[1] );
     }
 
-    // std::cout << name << std::endl;
+    analyzer.analyze(name);
+
     return 0;
 }

@@ -18,6 +18,8 @@
 
 typedef std::shared_ptr< stack::GrammarElement > Grammar_ptr;
 typedef std::shared_ptr< stack::NonTerminal > NonTerminal_prt;
+typedef std::shared_ptr< stack::State > State_prt;
+typedef std::shared_ptr< stack::Terminal > Terminal_prt;
 
 namespace analyzers
 {
