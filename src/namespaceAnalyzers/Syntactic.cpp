@@ -210,7 +210,7 @@ void analyzers::Syntactic::printStack()
     std::stack< Grammar_ptr > copy( *this->stack );
 
     std::string tab = "\t";
-    std::cout << "Pila:     ";
+    std::cout << "Stack:     ";
 
     if ( copy.size() < 7 )
     {
