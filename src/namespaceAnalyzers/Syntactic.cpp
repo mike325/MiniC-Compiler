@@ -47,8 +47,8 @@ analyzers::Syntactic::Syntactic()
 
             // stack::NonTerminal new_nonterminal( nonterminal_id, reductions, simbol );
             // this->rules[i] = new_nonterminal;
-            this->rules[i] = NonTerminal_prt(
-                new stack::NonTerminal( nonterminal_id, reductions, simbol ) );
+            this->rules[i] =
+                NonTerminal_prt( new stack::NonTerminal( nonterminal_id, reductions, simbol ) );
         }
 
         grammar.getline( buffer, 20, '\t' );
@@ -58,7 +58,7 @@ analyzers::Syntactic::Syntactic()
         rows = atoi( buffer );
 
         // matrix size
-        this->matrix = new int*[rows];
+        this->matrix = new int *[rows];
 
         for ( unsigned int i = 0; i < colums; ++i )
         {
@@ -80,7 +80,7 @@ analyzers::Syntactic::Syntactic()
     }
     grammar.close();
 
-    this->stack->push( Terminal_prt( new stack::Terminal( "$" ) ));
+    this->stack->push( Terminal_prt( new stack::Terminal( "$" ) ) );
     this->stack->push( State_prt( new stack::State( 0 ) ) );
 }
 
@@ -98,85 +98,83 @@ analyzers::Syntactic::~Syntactic()
     delete[] this->matrix;
 }
 
-std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement)
+std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement )
 {
-    while(stream.find(character) != stream.npos)
+    while ( stream.find( character ) != stream.npos )
     {
-        int pos = stream.find_first_of(character);
-        std::swap(stream[pos], replacement);
+        int pos = stream.find_first_of( character );
+        std::swap( stream[pos], replacement );
     }
     return stream;
 }
 
-void analyzers::Syntactic::analyze(char *file_name)
+void analyzers::Syntactic::analyze( char *file_name )
 {
     analyzers::Lexic lexic;
-    std::string lines = "", line_tail = "", copy_line_tail = "",stream_name(file_name);
+    std::string lines = "", line_tail = "", copy_line_tail = "", stream_name( file_name );
     std::string buffer = "";
     int action = 0, finish = 0, head_state = 0;
     Grammar_ptr stack_head;
 
-    std::ifstream source_code(file_name);
+    std::ifstream source_code( file_name );
 
-    if(!source_code.good())
+    if ( !source_code.good() )
     {
         std::cout << "Missing file\n\n";
     }
     else
     {
-        while( !source_code.eof() || !std::getline(source_code, buffer) )
+        while ( !source_code.eof() || !std::getline( source_code, buffer ) )
         {
-            lines.append(buffer);
+            lines.append( buffer );
         }
 
-        this->replace(lines, '\r', '\0');
+        this->replace( lines, '\r', '\0' );
         lines += '$';
 
-        //this->print();
+        // this->print();
 
-        lines = lexic.getToken(lines);
-        copy_line_tail.assign(lines);
+        lines = lexic.getToken( lines );
+        copy_line_tail.assign( lines );
 
-        while(!finish)
+        while ( !finish )
         {
-            if(!lexic.error)
+            if ( !lexic.error )
             {
                 head_state = this->stack->top()->state;
-                action = this->matrix[head_state][lexic.type];
+                action     = this->matrix[head_state][lexic.type];
 
-                if(action == -1)
+                if ( action == -1 )
                 {
                     finish = 0;
                 }
-                else if (action > 0)
+                else if ( action > 0 )
                 {
                     // stack::Terminal terminal (lexic.symbol);
-                    this->stack->push( Terminal_prt(new stack::Terminal(lexic.symbol)) );
-                    this->stack->push( State_prt(new stack::State(action)) );
+                    this->stack->push( Terminal_prt( new stack::Terminal( lexic.symbol ) ) );
+                    this->stack->push( State_prt( new stack::State( action ) ) );
                 }
-                else if(action < 0)
+                else if ( action < 0 )
                 {
-
                 }
                 else
                 {
                     this->error = true;
-                    //print syntactic error
+                    // print syntactic error
                 }
             }
             else
             {
-                //print lexic error
+                // print lexic error
             }
         }
 
-        if(!lexic.error && this->error)
+        if ( !lexic.error && this->error )
         {
-
         }
         else
         {
-
+            // null
         }
     }
 
@@ -185,24 +183,23 @@ void analyzers::Syntactic::analyze(char *file_name)
 
 void analyzers::Syntactic::printStack()
 {
-    std::stack<Grammar_ptr> copy (*this->stack);
+    std::stack< Grammar_ptr > copy( *this->stack );
 
     std::string tab = "\t";
     std::cout << "Pila:     ";
 
-    if(copy.size() < 7)
+    if ( copy.size() < 7 )
     {
-        tab.push_back('\t');
+        tab.push_back( '\t' );
     }
 
-    for(unsigned int i = 0; i < copy.size(); i++)
+    for ( unsigned int i = 0; i < copy.size(); i++ )
     {
         Grammar_ptr stack_head = copy.top();
         stack_head->print();
         copy.pop();
     }
 }
-
 
 /*
 
