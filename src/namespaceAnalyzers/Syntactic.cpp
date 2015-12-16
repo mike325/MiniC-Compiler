@@ -85,12 +85,14 @@ analyzers::Syntactic::~Syntactic()
     this->rules.clear();
     delete this->stack;
     // not finished yet
+    /*
     int size = sizeof( this->matrix[0] ) / sizeof( int );
-    for ( int i = size - 1; i >= 0; ++i )
+    for ( int i = 0; i < size; i++ )
     {
         delete[] this->matrix[i];
     }
     delete[] this->matrix;
+      */
 }
 
 std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement )
