@@ -3,8 +3,6 @@
 #include <algorithm>
 #include "../../Include/namespaceAnalyzers/Lexic.h"
 #include "../../Include/namespaceAnalyzers/Syntactic.h"
-#include "../../Include/namespaceStack/Terminal.h"
-#include "../../Include/namespaceStack/State.h"
 
 
 analyzers::Syntactic::Syntactic()
@@ -162,7 +160,7 @@ void analyzers::Syntactic::analyze( char *file_name )
                         NonTerminal_prt rule(new stack::NonTerminal(this->rules.at(rule_number)));
 
                         /* just for some tests */
-                        for (unsigned int i = 0; i < rule->reductions * 2; ++i) {
+                        for (unsigned int i = 0; i < (unsigned int) rule->reductions * 2; ++i) {
                             this->stack->pop();
                         }
                         /* just for some tests */

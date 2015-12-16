@@ -13,8 +13,10 @@
 #include <memory>
 #include <mutex>
 
-#include "../../Include/namespaceStack/NonTerminal.h"
 #include "../../Include/namespaceStack/GrammarElement.h"
+#include "../../Include/namespaceStack/NonTerminal.h"
+#include "../../Include/namespaceStack/State.h"
+#include "../../Include/namespaceStack/Terminal.h"
 
 typedef std::shared_ptr< stack::GrammarElement > Grammar_ptr;
 typedef std::shared_ptr< stack::NonTerminal > NonTerminal_prt;
