@@ -108,7 +108,7 @@ void analyzers::Syntactic::analyze( char *file_name )
     analyzers::Lexic lexic;
     std::string lines = "", line_tail = "";
     std::string buffer = "";
-    int action = 0, head_state = 0;
+    int action = 0;
     bool finish = false;
 
     std::ifstream source_code( file_name );
@@ -136,8 +136,7 @@ void analyzers::Syntactic::analyze( char *file_name )
         {
             if ( !lexic.error )
             {
-                head_state = this->stack->top()->state;
-                action     = this->matrix[head_state][lexic.type];
+                action     = this->matrix[this->stackTop()][lexic.type];
 
                 if ( action == -1 )
                 {
@@ -167,7 +166,7 @@ void analyzers::Syntactic::analyze( char *file_name )
                         }
                         /* just for some tests */
 
-                        action = this->matrix[this->stack->top()->state][rule->state];
+                        action = this->matrix[this->stackTop()][rule->state];
 
                         this->stack->push( rule );
                         this->stack->push( State_prt( new stack::State( action ) ) );
@@ -228,9 +227,19 @@ void analyzers::Syntactic::printStack()
     }
 }
 
-/*
+int analyzers::Syntactic::stackTop()
+{
+    return this->stack->top()->state;
+}
 
+void analyzers::Syntactic::print()
+{
+    std::cout << " State " << std::endl;
+    // unfinished
+    this->printStack();
+    // unfinished
+}
+
+/*
 void analyzers::Syntactic::read();
-int analyzers::Syntactic::stackTop();
-void analyzers::Syntactic::print();
 */
