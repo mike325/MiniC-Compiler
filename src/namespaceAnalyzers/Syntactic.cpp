@@ -18,7 +18,7 @@ analyzers::Syntactic::Syntactic()
     }
     else
     {
-        std::string simbol = "";
+        std::string symbol = "";
         int nonterminal_id = 0, reductions = 0;
         int colums = 0, rows = 0;
         int rule_number;
@@ -35,7 +35,7 @@ analyzers::Syntactic::Syntactic()
             reductions = atoi( buffer );
 
             grammar.getline( buffer, 30, '\n' );
-            simbol.assign( buffer );
+            symbol.assign( buffer );
 
             // try with pointers
             // this->rules[i] = new stack::NonTerminal( nonterminal_id, reductions, simbol );
