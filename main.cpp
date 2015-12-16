@@ -32,6 +32,10 @@ int main( int argc, char *argv[] )
     {
         std::cout << load.what() << std::endl;
     }
+    catch (...)
+    {
+        std::cout << "o.o" << std::endl;
+    }
 
     return 0;
 }
