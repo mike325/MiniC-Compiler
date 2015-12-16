@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.3)
 project(Compiler)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O2 -Wall")
-set (Include_dirs   Include/namespaceFiles
-                    Include/namespaceAnalyzers
-                    Include/namespaceStack
-                    Include/namespaceExceptions
+set (Include_dirs
+        Include/namespaceFiles
+        Include/namespaceAnalyzers
+        Include/namespaceStack
+        Include/namespaceExceptions
 )
 
 set (Project_bin_src main.cpp)
@@ -19,7 +20,7 @@ set (Project_src
         src/namespaceStack/NonTerminal.cpp
         src/namespaceStack/State.cpp
         src/namespaceStack/GrammarElement.cpp
-        src/namespaceExceptions/Exceptions.cpp
+        src/namespaceExceptions/FileException.cpp
 )
 
 include_directories (${Include_dirs})
