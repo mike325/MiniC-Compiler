@@ -5,7 +5,7 @@
 #include <string>
 #include "../../Include/namespaceExceptions/FileException.h"
 
-exceptions::FileException::FileException(std::string message, std::string description) : GeneralException()
+exceptions::FileException::FileException(std::string message) : GeneralException()
 {
     this->message.assign(message);
     this->message.append(" could not been loaded");

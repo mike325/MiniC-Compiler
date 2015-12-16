@@ -14,7 +14,7 @@ namespace exceptions
     {
     public:
 
-        FileException ( std::string message, std::string description );
+        FileException ( std::string message);
         ~FileException () throw();
         const char* what() const throw();
 

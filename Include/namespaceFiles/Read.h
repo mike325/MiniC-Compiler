@@ -18,7 +18,7 @@ namespace files
         Read();
         virtual ~Read();
         void readFile();
-        char* assingName( char* name );
+        char* assignName( char* name );
 
       private:
     };

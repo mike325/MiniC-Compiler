@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string.h>
 #include "../../Include/namespaceFiles/Read.h"
+#include "../../Include/namespaceExceptions/FileException.h"
 
 files::Read::Read() { name = ""; }
 files::Read::~Read() { name = ""; }
@@ -36,7 +37,7 @@ void files::Read::readFile()
         }
     }
 }
-char *files::Read::assingName( char *name )
+char *files::Read::assignName( char *name )
 {
     char *new_name;
 
@@ -49,6 +50,14 @@ char *files::Read::assingName( char *name )
     {
         new_name = new char[strlen( name )];
         strcpy( new_name, name );
+    }
+
+    std::ifstream file(new_name);
+
+    if(!file.good())
+    {
+        std::string file_name(new_name);
+        throw new exceptions::FileException(file_name);
     }
 
     return new_name;
