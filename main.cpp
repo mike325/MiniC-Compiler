@@ -24,7 +24,7 @@ int main( int argc, char *argv[] )
         name = file.assingName( argv[1] );
     }
 
-    analyzer.analyze(name);
+    analyzer.analyze( name );
 
     return 0;
 }

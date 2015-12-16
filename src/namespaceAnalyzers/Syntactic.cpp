@@ -4,7 +4,6 @@
 #include "../../Include/namespaceAnalyzers/Lexic.h"
 #include "../../Include/namespaceAnalyzers/Syntactic.h"
 
-
 analyzers::Syntactic::Syntactic()
 {
     this->error = false;
@@ -27,7 +26,7 @@ analyzers::Syntactic::Syntactic()
         grammar.getline( buffer, 10, '\n' );
         rule_number = atoi( buffer );
 
-        for (int i = 0; i < rule_number; ++i)
+        for ( int i = 0; i < rule_number; ++i )
         {
             grammar.getline( buffer, 20, '\t' );
             nonterminal_id = atoi( buffer );
@@ -56,16 +55,16 @@ analyzers::Syntactic::Syntactic()
         // matrix size
         this->matrix = new int *[rows];
 
-        for (int i = 0; i < colums; ++i)
+        for ( int i = 0; i < colums; ++i )
         {
             this->matrix[i] = new int[colums];
         }
 
-        for (int i = 0; i < rows; ++i)
+        for ( int i = 0; i < rows; ++i )
         {
             grammar.getline( buffer, 500, '\n' );
             // std::istringstream matrix_buffer( buffer );
-            for (int j = 0; j < colums; ++j)
+            for ( int j = 0; j < colums; ++j )
             {
                 // check buffer characters
                 sscanf( buffer, "%[^\t^\n]s", matrix_buffer );
@@ -98,7 +97,7 @@ std::string analyzers::Syntactic::replace( std::string stream, char character, c
 {
     while ( stream.find( character ) != stream.npos )
     {
-        unsigned long pos = stream.find_first_of(character);
+        unsigned long pos = stream.find_first_of( character );
         std::swap( stream[pos], replacement );
     }
     return stream;
@@ -131,7 +130,7 @@ void analyzers::Syntactic::analyze( char *file_name )
         // this->print();
 
         lines = lexic.getToken( lines );
-        line_tail.assign(lines);
+        line_tail.assign( lines );
 
         while ( !finish )
         {
@@ -151,37 +150,41 @@ void analyzers::Syntactic::analyze( char *file_name )
                     this->stack->push( State_prt( new stack::State( action ) ) );
                     // this->print();
                     line_tail = lines;
-                    lines = lexic.getToken(lines);
+                    lines     = lexic.getToken( lines );
                 }
                 else if ( action < 0 )
                 {
-                    int rule_number = (action * -1) - 2;
-                    if (this->rules.find(rule_number) != this->rules.end()) {
-                        NonTerminal_prt rule(new stack::NonTerminal(this->rules.at(rule_number)));
+                    int rule_number = ( action * -1 ) - 2;
+                    if ( this->rules.find( rule_number ) != this->rules.end() )
+                    {
+                        NonTerminal_prt rule(
+                            new stack::NonTerminal( this->rules.at( rule_number ) ) );
 
                         /* just for some tests */
-                        for (unsigned int i = 0; i < (unsigned int) rule->reductions * 2; ++i) {
+                        for ( unsigned int i = 0; i < ( unsigned int )rule->reductions * 2; ++i )
+                        {
                             this->stack->pop();
                         }
                         /* just for some tests */
 
                         action = this->matrix[this->stack->top()->state][rule->state];
 
-                        this->stack->push(rule);
-                        this->stack->push(State_prt(new stack::State(action)));
+                        this->stack->push( rule );
+                        this->stack->push( State_prt( new stack::State( action ) ) );
 
                         // this->print();
                     }
-                    else {
+                    else
+                    {
                         std::cout << "Rule " << rule_number << "does not exist\n";
                         this->error = true;
-                        finish = true;
+                        finish      = true;
                     }
                 }
                 else
                 {
                     this->error = true;
-                    finish = true;
+                    finish      = true;
                     // print syntactic error
                 }
             }
@@ -192,7 +195,7 @@ void analyzers::Syntactic::analyze( char *file_name )
             }
         }
 
-        if (!lexic.error && !this->error)
+        if ( !lexic.error && !this->error )
         {
             // source code correct
         }
@@ -217,7 +220,7 @@ void analyzers::Syntactic::printStack()
         tab.push_back( '\t' );
     }
 
-    while (copy.size() > 0)
+    while ( copy.size() > 0 )
     {
         Grammar_ptr stack_head = copy.top();
         stack_head->print();

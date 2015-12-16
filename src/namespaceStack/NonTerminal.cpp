@@ -13,18 +13,19 @@ stack::NonTerminal::NonTerminal() : GrammarElement()
     this->nontermial_symbol = "";
 }
 
-stack::NonTerminal::NonTerminal(int id, int reductions, std::string nontermial_symbol)
+stack::NonTerminal::NonTerminal( int id, int reductions, std::string nontermial_symbol )
     : GrammarElement()
 {
     this->id         = id;
     this->reductions = reductions;
-    this->nontermial_symbol.assign(nontermial_symbol);
+    this->nontermial_symbol.assign( nontermial_symbol );
 }
 
-stack::NonTerminal::NonTerminal(const std::shared_ptr<stack::NonTerminal> &copied_nonterminal) {
-    this->id = copied_nonterminal->id;
+stack::NonTerminal::NonTerminal( const std::shared_ptr< stack::NonTerminal > &copied_nonterminal )
+{
+    this->id         = copied_nonterminal->id;
     this->reductions = copied_nonterminal->reductions;
-    this->nontermial_symbol.assign(copied_nonterminal->nontermial_symbol);
+    this->nontermial_symbol.assign( copied_nonterminal->nontermial_symbol );
 }
 
 stack::NonTerminal::~NonTerminal()

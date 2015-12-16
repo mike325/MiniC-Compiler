@@ -31,13 +31,13 @@ namespace analyzers
         bool error;
         int **matrix;
         std::stack< Grammar_ptr > *stack;
-        std::map< int,  NonTerminal_prt > rules;
+        std::map< int, NonTerminal_prt > rules;
 
         Syntactic();
         virtual ~Syntactic();
 
-        std::string replace( std::string stream, char character, char replacement);
-        void analyze(char *file_name);
+        std::string replace( std::string stream, char character, char replacement );
+        void analyze( char *file_name );
         void read();
         int stackTop();
         void printStack();

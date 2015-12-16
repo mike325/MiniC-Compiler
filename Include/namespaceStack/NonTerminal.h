@@ -21,9 +21,9 @@ namespace stack
 
         NonTerminal();
 
-        NonTerminal(const std::shared_ptr<stack::NonTerminal> &copied_nonterminal);
+        NonTerminal( const std::shared_ptr< stack::NonTerminal > &copied_nonterminal );
 
-        NonTerminal(int id, int reductions, std::string nontermial_symbol);
+        NonTerminal( int id, int reductions, std::string nontermial_symbol );
         virtual ~NonTerminal();
 
         void print();
