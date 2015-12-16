@@ -12,11 +12,12 @@ namespace exceptions
     class Exception : public std::exception
     {
       public:
-        Exception( int mot ) : exception(), motivo( mot ) {}
+        Exception( std::string message ) : exception( ), message( message ) {}
+        ~Exception() throw();
         const char* what() const throw();
 
       private:
-        int motivo;
+        std::string message;
     };
 }
 

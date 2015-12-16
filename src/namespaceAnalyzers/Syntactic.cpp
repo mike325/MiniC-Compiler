@@ -43,7 +43,7 @@ analyzers::Syntactic::Syntactic()
             // stack::NonTerminal new_nonterminal( nonterminal_id, reductions, simbol );
             // this->rules[i] = new_nonterminal;
             this->rules[i] =
-                NonTerminal_prt( new stack::NonTerminal( nonterminal_id, reductions, simbol ) );
+                NonTerminal_prt( new stack::NonTerminal( nonterminal_id, reductions, symbol ) );
         }
 
         grammar.getline( buffer, 20, '\t' );
