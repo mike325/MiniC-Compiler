@@ -20,6 +20,7 @@ namespace stack
         virtual ~GrammarElement();
 
         virtual void print();
+        friend std::ostream& operator<<(std::ostream &output, const GrammarElement &element);
 
       private:
     };

@@ -27,6 +27,7 @@ namespace stack
         virtual ~NonTerminal();
 
         void print();
+        friend std::ostream& operator<<(std::ostream &output, const NonTerminal &element);
 
       private:
     };

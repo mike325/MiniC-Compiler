@@ -20,6 +20,7 @@ namespace stack
         virtual ~State();
 
         void print();
+        friend std::ostream& operator<<(std::ostream &output, const State &element);
 
       private:
     };

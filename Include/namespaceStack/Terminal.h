@@ -22,6 +22,7 @@ namespace stack
         virtual ~Terminal();
 
         void print();
+        friend std::ostream& operator<<(std::ostream &output, const Terminal &element);
 
       private:
     };

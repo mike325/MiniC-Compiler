@@ -41,3 +41,12 @@ void stack::NonTerminal::print()
     std::cout << "NonTerminal reductions " << this->reductions << std::endl;
     std::cout << "NonTerminal simbol " << this->nontermial_symbol << std::endl;
 }
+
+std::ostream& operator<<(std::ostream &output, const stack::NonTerminal &element)
+{
+    output << "NonTerminal id " << element.id << std::endl;
+    output << "NonTerminal reductions " << element.reductions << std::endl;
+    output << "NonTerminal simbol " << element.nontermial_symbol << std::endl;
+
+    return output;
+}
