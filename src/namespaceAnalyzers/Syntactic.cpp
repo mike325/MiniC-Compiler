@@ -1,8 +1,10 @@
 
 #include <fstream>
 #include <algorithm>
+#include <cstddef>    // std::size_t
 #include "../../Include/namespaceAnalyzers/Lexic.h"
 #include "../../Include/namespaceAnalyzers/Syntactic.h"
+#include "../../Include/namespaceExceptions/FileException.h"
 
 analyzers::Syntactic::Syntactic()
 {
@@ -15,62 +17,77 @@ analyzers::Syntactic::Syntactic()
     if ( !grammar.good() )
     {
         std::cout << "There's a problem with the grammar file\n";
+        std::string file_name( "compiler.lr" );
+        throw exceptions::FileException( file_name );
     }
     else
     {
-        std::string symbol = "";
+        std::string symbol = "", line = "";
         int nonterminal_id = 0, reductions = 0;
-        int colums = 0, rows = 0;
+        int rows = 0, colums = 0;
         int rule_number;
-        char buffer[500], matrix_buffer[5];
-        grammar.getline( buffer, 10, '\n' );
-        rule_number = atoi( buffer );
+        // char buffer[500], matrix_buffer[5];
+        getline( grammar, line );
+        rule_number = atoi( line.c_str() );
 
         for ( int i = 0; i < rule_number; ++i )
         {
-            grammar.getline( buffer, 20, '\t' );
-            nonterminal_id = atoi( buffer );
+            getline( grammar, line, '\t' );
+            nonterminal_id = atoi( line.c_str() );
 
-            grammar.getline( buffer, 20, '\t' );
-            reductions = atoi( buffer );
+            getline( grammar, line, '\t' );
+            reductions = atoi( line.c_str() );
 
-            grammar.getline( buffer, 30, '\n' );
-            symbol.assign( buffer );
+            getline( grammar, line );
+            symbol.assign( line );
 
             // try with pointers
             // this->rules[i] = new stack::NonTerminal( nonterminal_id, reductions, simbol );
 
             // stack::NonTerminal new_nonterminal( nonterminal_id, reductions, simbol );
             // this->rules[i] = new_nonterminal;
-            this->rules[i] =
-                NonTerminal_prt( new stack::NonTerminal( nonterminal_id, reductions, symbol ) );
+            this->rules[i]
+                = NonTerminal_prt( new stack::NonTerminal( nonterminal_id, reductions, symbol ) );
         }
 
-        grammar.getline( buffer, 20, '\t' );
-        colums = atoi( buffer );
+        getline( grammar, line, '\t' );
+        rows = atoi( line.c_str() );
 
-        grammar.getline( buffer, 30, '\n' );
-        rows = atoi( buffer );
+        getline( grammar, line );
+        colums = atoi( line.c_str() );
 
         // matrix size
         this->matrix = new int *[rows];
 
-        for ( int i = 0; i < colums; ++i )
+        for ( int i = 0; i < rows; ++i )
         {
             this->matrix[i] = new int[colums];
         }
 
         for ( int i = 0; i < rows; ++i )
         {
-            grammar.getline( buffer, 500, '\n' );
-            // std::istringstream matrix_buffer( buffer );
+            getline( grammar, line );
+            // line = this->replace( line, '\t', ' ' );
+            // std::cout << line << "\n";
+            std::size_t pos = 0;
             for ( int j = 0; j < colums; ++j )
             {
-                // check buffer characters
-                sscanf( buffer, "%[^\t^\n]s", matrix_buffer );
-                this->matrix[i][j] = atoi( matrix_buffer );
+                if ( pos != std::string::npos && pos < line.size() )
+                {
+                    std::string stream( line.substr( pos, line.find_first_of( " \t\n\r" ) ) );
+                    this->matrix[i][j] = atoi( stream.c_str() );
+                    pos = line.find_first_not_of( " \t\n\r", line.find_first_of( " \t\n\r" ) );
+                    if ( pos != std::string::npos && pos < line.size() )
+                    {
+                        line = line.substr( pos );
+                    }
+                }
+                else
+                {
+                    this->matrix[i][j] = atoi( line.c_str() );
+                    break;
+                }
             }
-            buffer[0] = '\0';
         }
     }
     grammar.close();
@@ -97,10 +114,12 @@ analyzers::Syntactic::~Syntactic()
 
 std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement )
 {
-    while ( stream.find( character ) != stream.npos )
+    for ( unsigned int i = 0; i < stream.size(); ++i )
     {
-        unsigned long pos = stream.find_first_of( character );
-        std::swap( stream[pos], replacement );
+        if ( stream[i] == character )
+        {
+            stream[i] = replacement;
+        }
     }
     return stream;
 }
