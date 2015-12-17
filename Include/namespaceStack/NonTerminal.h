@@ -24,7 +24,7 @@ namespace stack
         NonTerminal( const std::shared_ptr< stack::NonTerminal > &copied_nonterminal );
 
         NonTerminal( int id, int reductions, std::string nontermial_symbol );
-        virtual ~NonTerminal();
+        ~NonTerminal() {}
 
         void print();
         friend std::ostream& operator<<(std::ostream &output, const NonTerminal &element);

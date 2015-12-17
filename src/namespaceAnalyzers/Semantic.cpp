@@ -7,4 +7,3 @@
 #include "../../Include/namespaceAnalyzers/Semantic.h"
 
 analyzers::Semantic::Semantic() {}
-analyzers::Semantic::~Semantic() {}

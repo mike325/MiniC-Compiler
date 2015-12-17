@@ -11,7 +11,6 @@ stack::Terminal::Terminal( std::string symbol ) : GrammarElement()
 {
     this->symbol.assign( symbol );
 }
-stack::Terminal::~Terminal() { this->symbol = ""; }
 void stack::Terminal::print()
 {
     std::cout << "Terminal state " << this->state << std::endl;

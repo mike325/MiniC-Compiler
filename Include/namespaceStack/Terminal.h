@@ -19,7 +19,7 @@ namespace stack
 
         Terminal();
         Terminal( std::string symbol );
-        virtual ~Terminal();
+        ~Terminal() {}
 
         void print();
         friend std::ostream& operator<<(std::ostream &output, const Terminal &element);

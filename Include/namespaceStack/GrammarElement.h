@@ -17,7 +17,7 @@ namespace stack
         int state;
 
         GrammarElement();
-        virtual ~GrammarElement();
+        virtual ~GrammarElement() {}
 
         virtual void print();
         friend std::ostream& operator<<(std::ostream &output, const GrammarElement &element);

@@ -28,13 +28,6 @@ stack::NonTerminal::NonTerminal( const std::shared_ptr< stack::NonTerminal > &co
     this->nontermial_symbol.assign( copied_nonterminal->nontermial_symbol );
 }
 
-stack::NonTerminal::~NonTerminal()
-{
-    this->id                = 0;
-    this->reductions        = 0;
-    this->nontermial_symbol = "";
-}
-
 void stack::NonTerminal::print()
 {
     std::cout << "NonTerminal id " << this->id << std::endl;

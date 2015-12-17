@@ -17,7 +17,7 @@ namespace stack
       public:
         State();
         State( int state );
-        virtual ~State();
+        ~State() {}
 
         void print();
         friend std::ostream& operator<<(std::ostream &output, const State &element);

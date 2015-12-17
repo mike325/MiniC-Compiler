@@ -15,7 +15,7 @@ namespace analyzers
     {
       public:
         Semantic();
-        virtual ~Semantic();
+        ~Semantic() {}
 
       private:
     };

@@ -13,10 +13,4 @@ exceptions::FileException::FileException( std::string message ) : GeneralExcepti
     this->description.append( this->message );
 }
 
-exceptions::FileException::~FileException() throw()
-{
-    this->message     = "";
-    this->description = "";
-}
-
 const char* exceptions::FileException::what() const throw() { return this->description.c_str(); }

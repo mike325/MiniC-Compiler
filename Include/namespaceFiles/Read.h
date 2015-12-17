@@ -16,7 +16,7 @@ namespace files
       public:
         std::string name;
         Read();
-        virtual ~Read();
+        ~Read() {}
         void readFile();
         char* assignName( char* name );
 

@@ -4,7 +4,6 @@
  *
  */
 
-#include <string.h>
 #include "../../Include/namespaceAnalyzers/Lexic.h"
 
 analyzers::Lexic::Lexic()
@@ -19,16 +18,6 @@ analyzers::Lexic::Lexic()
     this->keyword["while"]  = 20;
     this->keyword["return"] = 21;
 
-    this->symbol = "";
-    this->state  = 0;
-    this->type   = 0;
-    this->index  = 0;
-    this->error  = false;
-}
-
-analyzers::Lexic::~Lexic()
-{
-    this->keyword.clear();
     this->symbol = "";
     this->state  = 0;
     this->type   = 0;

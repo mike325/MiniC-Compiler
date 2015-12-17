@@ -20,7 +20,7 @@ namespace analyzers
         bool error;
 
         Lexic();
-        virtual ~Lexic();
+        ~Lexic() { this->keyword.clear(); }
 
         std::string deleteSpaces( std::string stream );
         std::string getToken( std::string stream );

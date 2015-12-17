@@ -10,7 +10,6 @@
 #include "../../Include/namespaceExceptions/FileException.h"
 
 files::Read::Read() { name = ""; }
-files::Read::~Read() { name = ""; }
 void files::Read::readFile()
 {
     name = "";
