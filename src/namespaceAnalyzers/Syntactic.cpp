@@ -8,11 +8,11 @@
 
 analyzers::Syntactic::Syntactic()
 {
-    this->error = false;
+    this->error  = false;
     this->matrix = NULL;
-    this->stack = new std::stack< Grammar_ptr >();
+    this->stack  = new std::stack< Grammar_ptr >();
 
-    //std::ifstream grammar( "MiniC-Compiler/Grammarcompiler.lr" );
+    // std::ifstream grammar( "MiniC-Compiler/Grammarcompiler.lr" );
     std::ifstream grammar( "compiler.lr" );
 
     if ( !grammar.good() )
@@ -102,7 +102,7 @@ analyzers::Syntactic::~Syntactic()
     this->error = false;
     this->rules.clear();
     delete this->stack;
-    if (this->matrix != NULL)
+    if ( this->matrix != NULL )
     {
         int size = sizeof( this->matrix[0] ) / sizeof( int );
         for ( int i = 0; i < size; i++ )
@@ -141,12 +141,10 @@ void analyzers::Syntactic::analyze( char *file_name )
     }
     else
     {
-        while ( !source_code.eof() || !std::getline( source_code, buffer ) )
+        while ( !source_code.eof() && std::getline( source_code, buffer ) )
         {
             lines.append( buffer );
         }
-
-        this->replace( lines, '\r', '\0' );
         lines += '$';
 
         // this->print();
