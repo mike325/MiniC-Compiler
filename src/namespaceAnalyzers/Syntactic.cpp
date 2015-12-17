@@ -12,14 +12,18 @@ analyzers::Syntactic::Syntactic()
     this->matrix = NULL;
     this->stack  = new std::stack< Grammar_ptr >();
 
-    // std::ifstream grammar( "MiniC-Compiler/Grammarcompiler.lr" );
-    std::ifstream grammar( "compiler.lr" );
+    std::ifstream grammar( "MiniC-Compiler/Grammarcompiler.lr" );
 
     if ( !grammar.good() )
     {
-        std::cout << "There's a problem with the grammar file\n";
-        std::string file_name( "compiler.lr" );
-        throw exceptions::FileException( file_name );
+        grammar.open( "compiler.lr" );
+        if ( !grammar.good() )
+        {
+            std::string file_name( "compiler.lr" );
+            std::string description( "There's a problem with the grammar file \"#\"" );
+            description.append( ", it may not be on the same dir. of the executable" );
+            throw exceptions::FileException( file_name, description );
+        }
     }
     else
     {

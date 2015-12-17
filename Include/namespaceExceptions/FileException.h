@@ -12,14 +12,14 @@ namespace exceptions
 {
     class FileException : public GeneralException
     {
-    public:
+      public:
+        FileException( std::string file_name );
+        FileException( std::string file_name, std::string description );
+        ~FileException() throw() {}
+        const char *what() const throw();
 
-        FileException ( std::string message);
-        ~FileException () throw() {}
-        const char* what() const throw();
-
-    private:
+      private:
     };
 }
 
-#endif //FILEEXCEPTION_H
+#endif    // FILEEXCEPTION_H
