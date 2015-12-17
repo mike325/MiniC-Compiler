@@ -9,10 +9,11 @@
 analyzers::Syntactic::Syntactic()
 {
     this->error = false;
-    // this->rules.clear();
+    this->matrix = NULL;
     this->stack = new std::stack< Grammar_ptr >();
 
-    std::ifstream grammar( "MiniC-Compiler/Grammar/compiler.lr" );
+    //std::ifstream grammar( "MiniC-Compiler/Grammarcompiler.lr" );
+    std::ifstream grammar( "compiler.lr" );
 
     if ( !grammar.good() )
     {
@@ -101,15 +102,15 @@ analyzers::Syntactic::~Syntactic()
     this->error = false;
     this->rules.clear();
     delete this->stack;
-    // not finished yet
-    /*
-    int size = sizeof( this->matrix[0] ) / sizeof( int );
-    for ( int i = 0; i < size; i++ )
+    if (this->matrix != NULL)
     {
-        delete[] this->matrix[i];
+        int size = sizeof( this->matrix[0] ) / sizeof( int );
+        for ( int i = 0; i < size; i++ )
+        {
+            delete[] this->matrix[i];
+        }
+        delete[] this->matrix;
     }
-    delete[] this->matrix;
-      */
 }
 
 std::string analyzers::Syntactic::replace( std::string stream, char character, char replacement )
