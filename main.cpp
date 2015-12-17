@@ -8,6 +8,8 @@
 #include "Include/namespaceAnalyzers/Syntactic.h"
 #include "Include/namespaceFiles/Read.h"
 #include "Include/namespaceExceptions/FileException.h"
+#include "Include/namespaceExceptions/LexicException.h"
+#include "Include/namespaceExceptions/SyntacticException.h"
 
 int main( int argc, char *argv[] )
 {
@@ -29,14 +31,22 @@ int main( int argc, char *argv[] )
 
         analyzer.analyze( name );
     }
-    catch ( const exceptions::FileException &load )
-    {
-        std::cout << load.what() << std::endl;
-    }
-    catch ( const std::out_of_range &error )
+    catch ( const std::out_of_range &index_error )
     {
         std::cout << "An unexpected error has ocurred:" << std::endl;
-        std::cout << error.what() << std::endl;
+        std::cout << index_error.what() << std::endl;
+    }
+    catch ( const exceptions::FileException &load_error )
+    {
+        std::cout << load_error.what() << std::endl;
+    }
+    catch ( const exceptions::LexicException &token_error)
+    {
+        std::cout << token_error.what() << std::endl;
+    }
+    catch ( const exceptions::SyntacticException &grammar_error)
+    {
+        std::cout << grammar_error.what() << std::endl;
     }
 
     return 0;

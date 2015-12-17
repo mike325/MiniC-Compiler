@@ -6,8 +6,7 @@ set (Include_dirs
         Include/namespaceFiles
         Include/namespaceAnalyzers
         Include/namespaceStack
-        Include/namespaceExceptions
-)
+        Include/namespaceExceptions)
 
 set (Project_bin_src main.cpp)
 
@@ -21,7 +20,7 @@ set (Project_src
         src/namespaceStack/State.cpp
         src/namespaceStack/GrammarElement.cpp
         src/namespaceExceptions/FileException.cpp
-)
+        src/namespaceExceptions/LexicException.cpp src/namespaceExceptions/SyntacticException.cpp)
 
 include_directories (${Include_dirs})
 add_library (Project_lib SHARED ${Project_src})

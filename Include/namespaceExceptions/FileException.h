@@ -22,4 +22,4 @@ namespace exceptions
     };
 }
 
-#endif //COMPILER_FILEEXCEPTION_H
+#endif //FILEEXCEPTION_H
