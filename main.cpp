@@ -4,18 +4,18 @@
  *
  */
 
+#include <stdexcept>
 #include "Include/namespaceAnalyzers/Syntactic.h"
 #include "Include/namespaceFiles/Read.h"
 #include "Include/namespaceExceptions/FileException.h"
 
 int main( int argc, char *argv[] )
 {
-    char *name = NULL;
-    analyzers::Syntactic analyzer;
-    files::Read file;
-
     try
     {
+        char *name = NULL;
+        analyzers::Syntactic analyzer;
+        files::Read file;
         if ( argc <= 1 )
         {
             // std::cout << file.name << std::endl;
@@ -29,9 +29,14 @@ int main( int argc, char *argv[] )
 
         analyzer.analyze( name );
     }
-    catch ( exceptions::FileException &load )
+    catch ( const exceptions::FileException &load )
     {
         std::cout << load.what() << std::endl;
+    }
+    catch ( const std::out_of_range &error )
+    {
+        std::cout << "An unexpected error has ocurred:" << std::endl;
+        std::cout << error.what() << std::endl;
     }
 
     return 0;
