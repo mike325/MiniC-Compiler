@@ -2268,7 +2268,7 @@ class Mientras(Sentencia):
             codigo += "{0}: \n{1}".format(etiqueta_inicio, self.expresion.generacionCodigo())
             codigo += "POP eax\n"
             codigo += "CMP eax, 1\n"
-            codigo += "JL {1}\n".format(etiqueta_fin)
+            codigo += "JL {0}\n".format(etiqueta_fin)
             codigo += self.bloque.generacionCodigo()
             codigo += "JMP {0}\n".format(etiqueta_inicio)
             codigo += "{0}:\n".format(etiqueta_fin)
