@@ -5,5 +5,5 @@ cmake_install.cmake
 install_manifest.txt
 *.pyc
 *.asm
-__pycache__/
+*__pycache__/
 
