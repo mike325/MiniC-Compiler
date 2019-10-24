@@ -10,6 +10,8 @@
 """
 
 import argparse
+import sys
+import os
 
 from Componentes.Sintactico import Sintactico
 from Componentes.Semantico import Semantico
@@ -52,15 +54,23 @@ def main():
     """
     Main function
     """
-    args = _parseArgs()
     errors = 0
+    filename = None
 
     try:
-        inicio = Sintactico()
-        filename = args.file if args.file is not None and len(args.file) > 0 else None
+        if len(sys.argv) > 1 and os.path.isfile(sys.argv[1]):
+            filename = sys.argv[1]
+        else:
+            args = _parseArgs()
+            filename = args.file if args.file is not None and len(args.file) > 0 else None
+
         lectura = Leer()
-        nombre = lectura.pedirArchivo() if filename is None else filename
-        arbol = inicio.entrada(nombre)
+
+        if filename is None:
+            filename = lectura.pedirArchivo()
+
+        inicio = Sintactico()
+        arbol = inicio.entrada(filename)
 
         if arbol is not None:
             semantico = Semantico()
