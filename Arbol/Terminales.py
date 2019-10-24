@@ -5,9 +5,9 @@
  *
 """
 
-from Arbol.Nodo import *
+from Arbol.Nodo import Nodo, Expresion
 from Componentes import Globales
-from Componentes.Excepciones import *
+from Componentes.Excepciones import Errores
 
 __author__ = "Miguel Ochoa Hernandez"
 
@@ -28,13 +28,11 @@ class Programa(Nodo):
     def __init__(self):
         super(Programa, self).__init__()
         self.definiciones = None
-        pass
 
     def inicializar(self, pila):
         pila.pop()
         self.definiciones = pila.pop().nodo
         return pila
-        pass
 
     def imprimir(self, tabulaciones):
         print("{0}<Programa>".format(tabulaciones))
@@ -46,8 +44,6 @@ class Programa(Nodo):
         self.definiciones.decideTipo()
         if self.definiciones.tipo_dato != "e":
             self.tipo_dato = "v"
-            pass
-        pass
 
     # pendiente
     def generacionCodigo(self):
@@ -73,7 +69,6 @@ class Programa(Nodo):
         codigo += "{0}".format(self.definiciones.generacionCodigo())
         codigo += "\nend\tinicio"
         return codigo
-        pass
 
 # primitivos
 #################################################################
@@ -86,65 +81,51 @@ class Termino(Expresion):
     def __init__(self):
         super(Termino, self).__init__()
         self.llamada_funcion = None
-        pass
 
     def inicializar(self, pila):
         pila.pop()
         self.llamada_funcion = pila.pop().nodo
         return pila
-        pass
 
     def imprimir(self, tabulaciones):
         print("{0}<Termino>".format(tabulaciones))
         self.llamada_funcion.imprimir(tabulaciones + "\t")
-        pass
 
     def decideTipo(self):
         self.tipo_dato = "e"
         self.llamada_funcion.decideTipo()
         if self.llamada_funcion.tipo_dato != "e":
             self.tipo_dato = self.llamada_funcion.tipo_dato
-            pass
         else:
             raise Errores("El termino no tiene un tipo de dato correcto en el ambito {0}".format(Globales.ambito))
-            pass
-        pass
 
     def generacionCodigo(self):
         codigo = ""
         codigo += self.llamada_funcion.generacionCodigo()
         return codigo
-        pass
 
 
 class Tipo(Nodo):
-
     """docstring for Tipo"""
 
     def __init__(self, terminal):
         super(Tipo, self).__init__()
         self.simbolo = terminal
-        pass
 
     def inicializar(self, terminal):
         self.simbolo = terminal
-        pass
 
     def imprimir(self, tabulaciones):
         print("{0}<Tipo>".format(tabulaciones))
         print("{0}{1}".format(tabulaciones, self.simbolo))
-        pass
 
     def decideTipo(self):
         tipos_validos = {"int": "i", "float": "f", "string": "s", "void": "v"}
         self.tipo_dato = tipos_validos.get(self.simbolo, "e")
         if self.tipo_dato == "e":
             raise Errores("El tipo de dato primitivo {0} en el ambito {1} no es aceptado".format(self.simbolo,Globales.ambito))
-            pass
-        pass
 
     def generacionCodigo(self):
-
         pass
 
 

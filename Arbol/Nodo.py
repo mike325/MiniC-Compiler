@@ -19,13 +19,11 @@ class Nodo(object):
         self.tipo_dato = None
         self.tabla_simbolos = None
         self.ambito = None
-        pass
 
     def inicializar(self, pila):
         pila.pop()
         self.simbolo = pila.pop().terminal
         return pila
-        pass
 
     def imprimir(self, tabulaciones):
         pass
@@ -37,7 +35,6 @@ class Nodo(object):
     def generacionCodigo(self):
         print("Nodo.generaCodigo")
         return ""
-        pass
 
 
 class Expresion(Nodo):
@@ -50,13 +47,10 @@ class Expresion(Nodo):
         self.derecha = None
         self.expresion = None
         self.termino = None
-        pass
 
     def inicializar(self, pila):
-
         self.siguiente = pila.pop().nodo
         return pila
-        pass
 
     def multiExpresion(self, pila):
         pila.pop()
@@ -68,25 +62,18 @@ class Expresion(Nodo):
         pila.pop()
         pila.pop()
         return pila
-        pass
 
     def definicionTermino(self, pila):
         pila.pop()
-
         self.termino = pila.pop().nodo
-
         return pila
-        pass
 
     def imprimir(self, tabulaciones):
         print("{0}<Expresion>".format(tabulaciones))
         if not(self.expresion is None):
             self.expresion.imprimir(tabulaciones + "\t")
-            pass
         else:
             self.termino.imprimir(tabulaciones + "\t")
-            pass
-        pass
 
     def decideTipo(self):
         self.tipo_dato = "e"
@@ -94,16 +81,10 @@ class Expresion(Nodo):
             self.expresion.validarTipo()
             if self.expresion.tipo_dato != "e":
                 self.tipo_dato = self.expresion.tipo_dato
-                pass
-            pass
         else:
             self.termino.validarTipo()
             if self.termino.tipo_dato != "e":
                 self.tipo_dato = self.termino.tipo_dato
-                pass
-            pass
-        pass
 
     def regresaSimbolo(self):
         return ""
-        pass

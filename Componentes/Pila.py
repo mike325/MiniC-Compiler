@@ -5,38 +5,35 @@
  *
 """
 
-from Arbol.Nodo import *
+# from Arbol.Nodo import Expresion
 
 __author__ = "Miguel Ochoa Hernandez"
 
 
-class ElementoPila(object):
-
+class ElementoPila():
     """docstring for ElementoPila"""
 
     def __init__(self):
         super(ElementoPila, self).__init__()
         self.estado = 0
         self.nodo = None
-        pass
 
 
 class Terminal(ElementoPila):
-
     """docstring for Terminal"""
 
     def __init__(self, terminal):
         super(Terminal, self).__init__()
         self.terminal = terminal
-        pass
 
     def imprimir(self):
+        """
+        Imprime stuff
+        """
         print("{ter}".format(ter=self.terminal), end="")
-        pass
 
 
 class NoTerminal(ElementoPila):
-
     """docstring for NoTerminal"""
 
     def __init__(self, no_terminal, reduccion, estado):
@@ -44,22 +41,23 @@ class NoTerminal(ElementoPila):
         self.estado = estado
         self.reduccion = reduccion
         self.no_terminal = no_terminal
-        pass
 
     def imprimir(self):
+        """
+        Imprime stuff
+        """
         print("{nt}".format(nt=self.no_terminal), end="")
-        pass
 
 
 class Estado(ElementoPila):
-
     """docstring for Estado"""
 
     def __init__(self, estado):
         super(Estado, self).__init__()
         self.estado = estado
-        pass
 
     def imprimir(self):
+        """
+        Imprime stuff
+        """
         print("{est}".format(est=self.estado), end="")
-        pass
