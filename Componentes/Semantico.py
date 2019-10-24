@@ -14,13 +14,11 @@ __author__ = "Miguel Ochoa Hernandez"
 
 
 class Semantico(object):
-
     """Analizador Semantico"""
 
     def __init__(self):
         self.arbol = None
         # self.tablaSimbolos = None
-        pass
 
     def analizar(self, arbol):
         Globales.reiniciar()
@@ -28,7 +26,6 @@ class Semantico(object):
         self.arbol.decideTipo()
         # self.tablaSimbolos.muestra()
         # self.muestraErrores()
-        pass
 
     def muestraErrores(self):
         pass

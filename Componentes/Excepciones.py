@@ -17,8 +17,6 @@ class Errores(Exception):
 
     def __init__(self, code):
         self.code = "Error Semantico, {0}".format(code)
-        pass
 
     def __str__(self):
         return repr(self.code)
-        pass

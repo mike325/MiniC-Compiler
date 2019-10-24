@@ -14,9 +14,9 @@ import os
 
 from Arbol.Nodo import Expresion
 
+# from Arbol.Terminales import Tipo
 from Arbol.Terminales import Programa
 from Arbol.Terminales import Termino
-# from Arbol.Terminales import Tipo
 from Arbol.Terminales import Identificador
 from Arbol.Terminales import Entero
 from Arbol.Terminales import Real
@@ -120,7 +120,7 @@ class Sintactico():
             self.pila = nodo.inicializar(self.pila)
         elif regla == 1:
             nodo = Definiciones()
-            # print("################### Aqui ya es nulo 1 ####################")
+            # print("################# Aqui ya es nulo 1 ##################")
         elif regla == 2:
             nodo = Definiciones()
             self.pila = nodo.inicializar(self.pila)
@@ -135,7 +135,7 @@ class Sintactico():
             self.pila = nodo.inicializar(self.pila)
         elif regla == 6:
             nodo = ListaVariables()
-            # print("################### Aqui ya es nulo 6 ####################")
+            # print("################# Aqui ya es nulo 6 ##################")
         elif regla == 7:
             nodo = ListaVariables()
             self.pila = nodo.inicializar(self.pila)
@@ -144,13 +144,13 @@ class Sintactico():
             self.pila = nodo.inicializar(self.pila)
         elif regla == 9:
             nodo = Parametros()
-            # print("################### Aqui ya es nulo 9 ####################")
+            # print("################# Aqui ya es nulo 9 ##################")
         elif regla == 10:
             nodo = Parametros()
             self.pila = nodo.inicializar(self.pila)
         elif regla == 11:
             nodo = ListaParametros()
-            # print("################### Aqui ya es nulo 11 ####################")
+            # print("################# Aqui ya es nulo 11 ##################")
         elif regla == 12:
             nodo = ListaParametros()
             self.pila = nodo.inicializar(self.pila)
@@ -285,7 +285,6 @@ class Sintactico():
             # print("################# Aqui ya es nulo for ##################")
             for _ in range(0, extraer.reduccion * 2):
                 self.pila.pop()
-
         return nodo
 
     def imprimirPila(self):
@@ -323,10 +322,9 @@ class Sintactico():
     def entrada(self, filename: str):
         arbol = None
         nodo = None
-        # lectura = Leer()
         nombre = filename
         lexico = Lexico()
-        encabezado = 0
+        encabezado = None
         accion = 0
         resto_linea = ""
         terminar = 0
