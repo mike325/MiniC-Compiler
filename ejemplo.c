@@ -2,6 +2,10 @@
 float t;
 int i, k;
 
+void print() {
+    float j;
+}
+
 int main() {
     int x;
     x = 0;

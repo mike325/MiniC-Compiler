@@ -1,0 +1,19 @@
+{
+  ".projections.json"  : {"type" : "Projections"},
+  ".gitignore"         : {"type" : "Gitignore"},
+  ".git/hooks/*"       : {"type" : "GitHooks"},
+  ".git/config"        : {"type" : "Git"},
+  ".ycm_extra_conf.py" : {"type" : "ConfigYCM"},
+  ".git/info/*"        : {"type" : "Git"},
+  "project.vim"        : {"type" : "Project"},
+  "README.md"          : {"type" : "Readme"},
+  "LICENSE"            : {"type" : "License"},
+  "main.py"            : {"type" : "Compilador"},
+  "*.c"                : {"type" : "Ejemplos"},
+  "ejemplo.c"          : {"type" : "Ejemplos"},
+  "*.py"               : {"type" : "Compilador"},
+  "Gramatica/*"        : {"type" : "Gramatica"},
+  "Componentes/*.py"   : {"type" : "Componentes"},
+  "Arbol/*.py"         : {"type" : "Arbol"}
+}
+
