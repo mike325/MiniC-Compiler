@@ -1094,12 +1094,8 @@ class ListaVariables(Nodo):
     def generacionCodigo(self):
         global tipos_ensamblador
         codigo = ""
-        if Globales.ambito != "global" and not (
-                self.identificador is
-                None) and self.identificador.simbolo != "":
-            codigo += "local {0}: {1}\n", format(
-                self.identificador.simbolo,
-                tipos_ensamblador.get(self.tipo_dato))
+        if Globales.ambito != "global" and not ( self.identificador is None) and self.identificador.simbolo != "":
+            codigo += "local {0}: {1}\n".format( self.identificador.simbolo, tipos_ensamblador.get(self.tipo_dato))
             if not (self.lista_variables is None):
                 codigo += self.lista_variables.generacionCodigo()
         return codigo
@@ -1842,7 +1838,7 @@ class CondicionalSimple(Sentencia):
                                           self.expresion.generacionCodigo())
             codigo += "POP eax\n"
             codigo += "CMP eax, 1\n"
-            codigo += "JL {1}\n".format(etiqueta_fin)
+            codigo += "JL {0}\n".format(etiqueta_fin)
             codigo += self.sentencia_bloque.generacionCodigo()
             codigo += "{0}:\n".format(etiqueta_fin)
 
